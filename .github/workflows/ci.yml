@@ -1,0 +1,16 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build -t kmenzyk/docker-react --file Dockerfile.dev .
+    - name: Run tests
+      run: docker run -e CI=true kmenzyk/docker-react yarn run test
